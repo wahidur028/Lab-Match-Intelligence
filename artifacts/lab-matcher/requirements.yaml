@@ -1,0 +1,18 @@
+packages:
+  "framer-motion": "For smooth transitions, staggering animations, and loading states"
+  "clsx": "Utility for constructing className strings conditionally"
+  "tailwind-merge": "Utility for merging Tailwind CSS classes without style conflicts"
+  "react-hook-form": "For robust form state management and validation"
+  "@hookform/resolvers": "Zod validation resolver for react-hook-form"
+  "zod": "Schema declaration and form validation"
+  "lucide-react": "Beautiful, consistent iconography"
+
+images:
+  - path: "artifacts/lab-matcher/public/images/academic-bg.png"
+    description: "Abstract soft gradient background with deep navy blue, subtle teal, and academic elegance. Clean, modern, very blurred, professional, subtle geometric hints. Creates a premium feel."
+    aspect_ratio: "16:9"
+
+notes:
+  - "Using wouter for routing as requested"
+  - "Importing all data fetching hooks from @workspace/api-client-react"
+  - "Using standard shadcn/ui components assumed to be present in src/components/ui/"

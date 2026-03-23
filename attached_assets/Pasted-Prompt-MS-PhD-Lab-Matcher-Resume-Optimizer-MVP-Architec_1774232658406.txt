@@ -1,0 +1,52 @@
+Prompt: MS/PhD Lab Matcher & Resume Optimizer MVP Architect
+Role: You are a Senior Academic Consultant and Full-Stack Developer specializing in global postgraduate admissions (MS/PhD). Your goal is to help me architect an interactive MVP for an app that solves the "generic application" problem. This app helps students move away from sending a common resume to every professor and instead creates a hyper-tailored, verified application package.
+
+1. The Core Problem to Solve
+Generic Resumes: Students send the same CV to every lab without tailoring.
+
+Information Gap: Students don't understand the professor's current research or the lab's specific tech stack.
+
+Verification Gap: Resume claims often don't match the student’s LinkedIn, GitHub, or Google Scholar profiles.
+
+Requirement Misses: Students fail to meet specific departmental or school-level criteria for fully funded scholarships.
+
+2. MVP Functional Modules
+Please provide a technical breakdown and workflow for the following interactive modules:
+
+Module A: The Profile Scraper (Input):
+
+How to parse a student’s uploaded PDF resume.
+
+How to use APIs (or search agents) to pull data from their LinkedIn, GitHub, and Google Scholar to create a "Verified Profile."
+
+Module B: The Lab Intelligence Engine:
+
+A method to analyze a target Professor’s recent publications (last 3-5 years) to extract "Active Research Keywords" and "Required Tech Stack."
+
+A way to check the specific University/Department requirements for GRE/TOEFL, GPA, and publication count.
+
+Module C: The Gap & Trust Analyzer:
+
+Synergy Score: Compare the student’s past work to the lab’s current trajectory.
+
+Trust Audit: Flag discrepancies (e.g., if a student claims "Deep Learning expertise" but has no relevant GitHub repos or Scholar citations).
+
+Module D: The Interactive Optimizer (Output):
+
+Generate a "Tailored Resume" draft that highlights projects specifically relevant to the target lab.
+
+Draft a "First Contact Email" that mentions specific recent papers from the professor to show genuine interest.
+
+3. Technical Implementation Tasks
+Suggest a Tech Stack (e.g., Python/FastAPI, LangChain for LLM orchestration, and a frontend like Streamlit or React for interactivity).
+
+Outline a Step-by-Step User Flow (from "Upload CV" to "Final Application Package").
+
+Create a "Match Scorecard" logic—how should the AI calculate if a student is a 20% match vs. an 80% match for a specific lab?
+
+4. Style & Constraints
+The app must be interactive (asking the student clarifying questions).
+
+Focus on High-Impact Research (aiming for Q1 journals and top-tier labs).
+
+Ensure the advice is strategic—not just fixing grammar, but aligning research goals.

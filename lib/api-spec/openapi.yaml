@@ -1,15 +1,16 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: MS/PhD Lab Matcher API specification
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: matcher
+    description: Lab matching and resume optimization operations
 paths:
   /healthz:
     get:
@@ -24,6 +25,123 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /matcher/analyze:
+    post:
+      operationId: analyzeMatch
+      tags: [matcher]
+      summary: Analyze student-lab match
+      description: Analyzes a student profile against a target lab and returns match score, gap analysis, and tailored application materials
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyzeMatchRequest"
+      responses:
+        "200":
+          description: Analysis result with match score and application materials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyzeMatchResponse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /matcher/sessions:
+    post:
+      operationId: createSession
+      tags: [matcher]
+      summary: Create a new analysis session
+      description: Creates and stores a new lab matching session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSessionRequest"
+      responses:
+        "201":
+          description: Session created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      operationId: listSessions
+      tags: [matcher]
+      summary: List all sessions
+      description: Returns all saved analysis sessions
+      responses:
+        "200":
+          description: List of sessions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Session"
+
+  /matcher/sessions/{id}:
+    get:
+      operationId: getSession
+      tags: [matcher]
+      summary: Get a session by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Session details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+        "404":
+          description: Session not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      operationId: deleteSession
+      tags: [matcher]
+      summary: Delete a session
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Session deleted
+        "404":
+          description: Session not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +152,260 @@ components:
       required:
         - status
 
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    AnalyzeMatchRequest:
+      type: object
+      properties:
+        studentProfile:
+          $ref: "#/components/schemas/StudentProfile"
+        targetLab:
+          $ref: "#/components/schemas/TargetLab"
+      required:
+        - studentProfile
+        - targetLab
+
+    StudentProfile:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Student's full name
+        resumeText:
+          type: string
+          description: Plain text content of student's resume/CV
+        linkedinUrl:
+          type: string
+          description: LinkedIn profile URL
+        githubUrl:
+          type: string
+          description: GitHub profile URL
+        scholarUrl:
+          type: string
+          description: Google Scholar profile URL
+        researchInterests:
+          type: string
+          description: Student's stated research interests and goals
+        gpa:
+          type: number
+          description: Student's GPA
+        publicationCount:
+          type: integer
+          description: Number of publications
+        skills:
+          type: array
+          items:
+            type: string
+          description: List of technical skills
+      required:
+        - name
+        - resumeText
+        - researchInterests
+
+    TargetLab:
+      type: object
+      properties:
+        professorName:
+          type: string
+          description: Professor's full name
+        university:
+          type: string
+          description: University name
+        department:
+          type: string
+          description: Department name
+        labWebsite:
+          type: string
+          description: Lab or professor's website URL
+        recentPapers:
+          type: string
+          description: Titles or descriptions of recent papers (comma-separated or list)
+        researchFocus:
+          type: string
+          description: General research area/focus of the lab
+      required:
+        - professorName
+        - university
+        - department
+        - researchFocus
+
+    AnalyzeMatchResponse:
+      type: object
+      properties:
+        matchScore:
+          type: integer
+          description: Overall match score from 0-100
+        synergy:
+          $ref: "#/components/schemas/SynergyAnalysis"
+        trustAudit:
+          $ref: "#/components/schemas/TrustAudit"
+        labIntelligence:
+          $ref: "#/components/schemas/LabIntelligence"
+        tailoredResumeBullets:
+          type: array
+          items:
+            type: string
+          description: AI-generated resume bullet points tailored to the lab
+        emailDraft:
+          type: string
+          description: AI-drafted first contact email
+        strategicAdvice:
+          type: string
+          description: Strategic advice for the application
+      required:
+        - matchScore
+        - synergy
+        - trustAudit
+        - labIntelligence
+        - tailoredResumeBullets
+        - emailDraft
+        - strategicAdvice
+
+    SynergyAnalysis:
+      type: object
+      properties:
+        score:
+          type: integer
+          description: Research synergy score 0-100
+        alignedAreas:
+          type: array
+          items:
+            type: string
+          description: Areas where student background aligns with lab research
+        gaps:
+          type: array
+          items:
+            type: string
+          description: Gaps between student background and lab needs
+        techStackMatch:
+          type: array
+          items:
+            type: string
+          description: Tech/tools the student has that match the lab
+        missingTechStack:
+          type: array
+          items:
+            type: string
+          description: Lab's tech stack the student is missing
+      required:
+        - score
+        - alignedAreas
+        - gaps
+        - techStackMatch
+        - missingTechStack
+
+    TrustAudit:
+      type: object
+      properties:
+        overallTrust:
+          type: string
+          enum: [high, medium, low]
+        flags:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrustFlag"
+        verifiedClaims:
+          type: array
+          items:
+            type: string
+      required:
+        - overallTrust
+        - flags
+        - verifiedClaims
+
+    TrustFlag:
+      type: object
+      properties:
+        claim:
+          type: string
+          description: The claim being evaluated
+        status:
+          type: string
+          enum: [verified, unverified, suspicious]
+        reason:
+          type: string
+          description: Explanation of the flag
+      required:
+        - claim
+        - status
+        - reason
+
+    LabIntelligence:
+      type: object
+      properties:
+        activeKeywords:
+          type: array
+          items:
+            type: string
+          description: Active research keywords extracted from recent work
+        techStack:
+          type: array
+          items:
+            type: string
+          description: Technologies and tools used in the lab
+        researchTrajectory:
+          type: string
+          description: Summary of the lab's current research direction
+        openProblems:
+          type: array
+          items:
+            type: string
+          description: Inferred open problems the lab is working on
+      required:
+        - activeKeywords
+        - techStack
+        - researchTrajectory
+        - openProblems
+
+    CreateSessionRequest:
+      type: object
+      properties:
+        studentProfile:
+          $ref: "#/components/schemas/StudentProfile"
+        targetLab:
+          $ref: "#/components/schemas/TargetLab"
+        analysisResult:
+          $ref: "#/components/schemas/AnalyzeMatchResponse"
+      required:
+        - studentProfile
+        - targetLab
+        - analysisResult
+
+    Session:
+      type: object
+      properties:
+        id:
+          type: integer
+        studentName:
+          type: string
+        professorName:
+          type: string
+        university:
+          type: string
+        matchScore:
+          type: integer
+        studentProfile:
+          $ref: "#/components/schemas/StudentProfile"
+        targetLab:
+          $ref: "#/components/schemas/TargetLab"
+        analysisResult:
+          $ref: "#/components/schemas/AnalyzeMatchResponse"
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - studentName
+        - professorName
+        - university
+        - matchScore
+        - studentProfile
+        - targetLab
+        - analysisResult
+        - createdAt
