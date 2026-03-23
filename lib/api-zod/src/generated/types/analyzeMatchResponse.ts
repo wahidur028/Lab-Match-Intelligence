@@ -6,6 +6,7 @@
  * OpenAPI spec version: 0.1.0
  */
 import type { LabIntelligence } from "./labIntelligence";
+import type { Recommendation } from "./recommendation";
 import type { SynergyAnalysis } from "./synergyAnalysis";
 import type { TrustAudit } from "./trustAudit";
 
@@ -15,6 +16,8 @@ export interface AnalyzeMatchResponse {
   synergy: SynergyAnalysis;
   trustAudit: TrustAudit;
   labIntelligence: LabIntelligence;
+  /** Actionable recommendations to improve match score */
+  recommendations: Recommendation[];
   /** AI-generated resume bullet points tailored to the lab */
   tailoredResumeBullets: string[];
   /** AI-drafted first contact email */

@@ -247,6 +247,11 @@ components:
           $ref: "#/components/schemas/TrustAudit"
         labIntelligence:
           $ref: "#/components/schemas/LabIntelligence"
+        recommendations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Recommendation"
+          description: Actionable recommendations to improve match score
         tailoredResumeBullets:
           type: array
           items:
@@ -263,6 +268,7 @@ components:
         - synergy
         - trustAudit
         - labIntelligence
+        - recommendations
         - tailoredResumeBullets
         - emailDraft
         - strategicAdvice
@@ -318,6 +324,40 @@ components:
         - overallTrust
         - flags
         - verifiedClaims
+
+    Recommendation:
+      type: object
+      properties:
+        category:
+          type: string
+          description: Category of the recommendation (e.g., Skills, Publications, Research Alignment, Trust Signals, GPA, Experience)
+        title:
+          type: string
+          description: Short, action-oriented title for the recommendation
+        action:
+          type: string
+          description: Specific, concrete action the student should take
+        impact:
+          type: string
+          description: Why this action will improve the match score
+        effort:
+          type: string
+          enum: [low, medium, high]
+          description: How much effort is required to implement this recommendation
+        scoreBoost:
+          type: integer
+          description: Estimated number of points this recommendation adds to the match score
+        projectedScore:
+          type: integer
+          description: Projected match score if this recommendation is implemented (cumulative)
+      required:
+        - category
+        - title
+        - action
+        - impact
+        - effort
+        - scoreBoost
+        - projectedScore
 
     TrustFlag:
       type: object

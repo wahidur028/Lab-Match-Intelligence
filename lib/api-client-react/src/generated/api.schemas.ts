@@ -110,12 +110,43 @@ export interface LabIntelligence {
   openProblems: string[];
 }
 
+/**
+ * How much effort is required to implement this recommendation
+ */
+export type RecommendationEffort =
+  (typeof RecommendationEffort)[keyof typeof RecommendationEffort];
+
+export const RecommendationEffort = {
+  low: "low",
+  medium: "medium",
+  high: "high",
+} as const;
+
+export interface Recommendation {
+  /** Category of the recommendation (e.g., Skills, Publications, Research Alignment, Trust Signals, GPA, Experience) */
+  category: string;
+  /** Short, action-oriented title for the recommendation */
+  title: string;
+  /** Specific, concrete action the student should take */
+  action: string;
+  /** Why this action will improve the match score */
+  impact: string;
+  /** How much effort is required to implement this recommendation */
+  effort: RecommendationEffort;
+  /** Estimated number of points this recommendation adds to the match score */
+  scoreBoost: number;
+  /** Projected match score if this recommendation is implemented (cumulative) */
+  projectedScore: number;
+}
+
 export interface AnalyzeMatchResponse {
   /** Overall match score from 0-100 */
   matchScore: number;
   synergy: SynergyAnalysis;
   trustAudit: TrustAudit;
   labIntelligence: LabIntelligence;
+  /** Actionable recommendations to improve match score */
+  recommendations: Recommendation[];
   /** AI-generated resume bullet points tailored to the lab */
   tailoredResumeBullets: string[];
   /** AI-drafted first contact email */

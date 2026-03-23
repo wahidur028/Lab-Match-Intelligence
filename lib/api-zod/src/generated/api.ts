@@ -103,6 +103,41 @@ export const AnalyzeMatchResponse = zod.object({
       .array(zod.string())
       .describe("Inferred open problems the lab is working on"),
   }),
+  recommendations: zod
+    .array(
+      zod.object({
+        category: zod
+          .string()
+          .describe(
+            "Category of the recommendation (e.g., Skills, Publications, Research Alignment, Trust Signals, GPA, Experience)",
+          ),
+        title: zod
+          .string()
+          .describe("Short, action-oriented title for the recommendation"),
+        action: zod
+          .string()
+          .describe("Specific, concrete action the student should take"),
+        impact: zod
+          .string()
+          .describe("Why this action will improve the match score"),
+        effort: zod
+          .enum(["low", "medium", "high"])
+          .describe(
+            "How much effort is required to implement this recommendation",
+          ),
+        scoreBoost: zod
+          .number()
+          .describe(
+            "Estimated number of points this recommendation adds to the match score",
+          ),
+        projectedScore: zod
+          .number()
+          .describe(
+            "Projected match score if this recommendation is implemented (cumulative)",
+          ),
+      }),
+    )
+    .describe("Actionable recommendations to improve match score"),
   tailoredResumeBullets: zod
     .array(zod.string())
     .describe("AI-generated resume bullet points tailored to the lab"),
@@ -198,6 +233,41 @@ export const CreateSessionBody = zod.object({
         .array(zod.string())
         .describe("Inferred open problems the lab is working on"),
     }),
+    recommendations: zod
+      .array(
+        zod.object({
+          category: zod
+            .string()
+            .describe(
+              "Category of the recommendation (e.g., Skills, Publications, Research Alignment, Trust Signals, GPA, Experience)",
+            ),
+          title: zod
+            .string()
+            .describe("Short, action-oriented title for the recommendation"),
+          action: zod
+            .string()
+            .describe("Specific, concrete action the student should take"),
+          impact: zod
+            .string()
+            .describe("Why this action will improve the match score"),
+          effort: zod
+            .enum(["low", "medium", "high"])
+            .describe(
+              "How much effort is required to implement this recommendation",
+            ),
+          scoreBoost: zod
+            .number()
+            .describe(
+              "Estimated number of points this recommendation adds to the match score",
+            ),
+          projectedScore: zod
+            .number()
+            .describe(
+              "Projected match score if this recommendation is implemented (cumulative)",
+            ),
+        }),
+      )
+      .describe("Actionable recommendations to improve match score"),
     tailoredResumeBullets: zod
       .array(zod.string())
       .describe("AI-generated resume bullet points tailored to the lab"),
@@ -299,6 +369,41 @@ export const ListSessionsResponseItem = zod.object({
         .array(zod.string())
         .describe("Inferred open problems the lab is working on"),
     }),
+    recommendations: zod
+      .array(
+        zod.object({
+          category: zod
+            .string()
+            .describe(
+              "Category of the recommendation (e.g., Skills, Publications, Research Alignment, Trust Signals, GPA, Experience)",
+            ),
+          title: zod
+            .string()
+            .describe("Short, action-oriented title for the recommendation"),
+          action: zod
+            .string()
+            .describe("Specific, concrete action the student should take"),
+          impact: zod
+            .string()
+            .describe("Why this action will improve the match score"),
+          effort: zod
+            .enum(["low", "medium", "high"])
+            .describe(
+              "How much effort is required to implement this recommendation",
+            ),
+          scoreBoost: zod
+            .number()
+            .describe(
+              "Estimated number of points this recommendation adds to the match score",
+            ),
+          projectedScore: zod
+            .number()
+            .describe(
+              "Projected match score if this recommendation is implemented (cumulative)",
+            ),
+        }),
+      )
+      .describe("Actionable recommendations to improve match score"),
     tailoredResumeBullets: zod
       .array(zod.string())
       .describe("AI-generated resume bullet points tailored to the lab"),
@@ -405,6 +510,41 @@ export const GetSessionResponse = zod.object({
         .array(zod.string())
         .describe("Inferred open problems the lab is working on"),
     }),
+    recommendations: zod
+      .array(
+        zod.object({
+          category: zod
+            .string()
+            .describe(
+              "Category of the recommendation (e.g., Skills, Publications, Research Alignment, Trust Signals, GPA, Experience)",
+            ),
+          title: zod
+            .string()
+            .describe("Short, action-oriented title for the recommendation"),
+          action: zod
+            .string()
+            .describe("Specific, concrete action the student should take"),
+          impact: zod
+            .string()
+            .describe("Why this action will improve the match score"),
+          effort: zod
+            .enum(["low", "medium", "high"])
+            .describe(
+              "How much effort is required to implement this recommendation",
+            ),
+          scoreBoost: zod
+            .number()
+            .describe(
+              "Estimated number of points this recommendation adds to the match score",
+            ),
+          projectedScore: zod
+            .number()
+            .describe(
+              "Projected match score if this recommendation is implemented (cumulative)",
+            ),
+        }),
+      )
+      .describe("Actionable recommendations to improve match score"),
     tailoredResumeBullets: zod
       .array(zod.string())
       .describe("AI-generated resume bullet points tailored to the lab"),
