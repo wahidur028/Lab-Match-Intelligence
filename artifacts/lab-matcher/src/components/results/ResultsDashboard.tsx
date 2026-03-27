@@ -297,20 +297,26 @@ export function ResultsDashboard({ result, student, lab, isSavedSession, onSave,
                 <CardContent className="space-y-5">
                   <div>
                     <h5 className="text-sm font-medium mb-2 text-foreground">Aligned Areas</h5>
-                    <div className="flex flex-wrap gap-2">
+                    <ul className="space-y-2">
                       {result.synergy.alignedAreas.map((area, i) => (
-                        <Badge key={i} variant="secondary" className="bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300 hover:bg-emerald-200">{area}</Badge>
+                        <li key={i} className="flex items-start gap-2 text-sm leading-relaxed">
+                          <span className="mt-1.5 w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+                          <span className="text-foreground">{area}</span>
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   </div>
                   {result.synergy.gaps.length > 0 && (
                     <div>
                       <h5 className="text-sm font-medium mb-2 text-foreground">Identified Gaps</h5>
-                      <div className="flex flex-wrap gap-2">
+                      <ul className="space-y-2">
                         {result.synergy.gaps.map((gap, i) => (
-                          <Badge key={i} variant="outline" className="text-destructive border-destructive/30 bg-destructive/5">{gap}</Badge>
+                          <li key={i} className="flex items-start gap-2 text-sm leading-relaxed">
+                            <span className="mt-1.5 w-2 h-2 rounded-full bg-destructive shrink-0" />
+                            <span className="text-foreground/80">{gap}</span>
+                          </li>
                         ))}
-                      </div>
+                      </ul>
                     </div>
                   )}
                   <div className="grid grid-cols-2 gap-4 pt-2">
