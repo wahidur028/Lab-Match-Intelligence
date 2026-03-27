@@ -14,6 +14,8 @@ export * from "./healthStatus";
 export * from "./labIntelligence";
 export * from "./recommendation";
 export * from "./recommendationEffort";
+export * from "./scrapeLabRequest";
+export * from "./scrapeLabResponse";
 export * from "./session";
 export * from "./studentProfile";
 export * from "./synergyAnalysis";

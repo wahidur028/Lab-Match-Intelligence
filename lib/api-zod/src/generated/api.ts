@@ -148,6 +148,38 @@ export const AnalyzeMatchResponse = zod.object({
 });
 
 /**
+ * Fetches Google Scholar and/or lab website pages and uses AI to extract structured professor and research information
+ * @summary Scrape lab and professor info from URLs
+ */
+export const ScrapeLabInfoBody = zod.object({
+  googleScholarUrl: zod
+    .string()
+    .optional()
+    .describe("Google Scholar profile URL of the professor"),
+  labWebsiteUrl: zod
+    .string()
+    .optional()
+    .describe("Lab or professor website URL"),
+});
+
+export const ScrapeLabInfoResponse = zod.object({
+  professorName: zod.string(),
+  university: zod.string().optional(),
+  department: zod.string().optional(),
+  researchFocus: zod
+    .string()
+    .describe("AI-generated summary of the professor's research areas"),
+  recentPapers: zod
+    .string()
+    .optional()
+    .describe("Formatted list of recent paper titles"),
+  activeKeywords: zod.array(zod.string()).optional(),
+  hIndex: zod.number().nullish(),
+  citationCount: zod.number().nullish(),
+  fetchErrors: zod.array(zod.string()).optional(),
+});
+
+/**
  * Creates and stores a new lab matching session
  * @summary Create a new analysis session
  */

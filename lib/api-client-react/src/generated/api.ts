@@ -22,6 +22,8 @@ import type {
   CreateSessionRequest,
   ErrorResponse,
   HealthStatus,
+  ScrapeLabRequest,
+  ScrapeLabResponse,
   Session,
 } from "./api.schemas";
 
@@ -195,6 +197,93 @@ export const useAnalyzeMatch = <
   TContext
 > => {
   return useMutation(getAnalyzeMatchMutationOptions(options));
+};
+
+/**
+ * Fetches Google Scholar and/or lab website pages and uses AI to extract structured professor and research information
+ * @summary Scrape lab and professor info from URLs
+ */
+export const getScrapeLabInfoUrl = () => {
+  return `/api/matcher/scrape-lab`;
+};
+
+export const scrapeLabInfo = async (
+  scrapeLabRequest: ScrapeLabRequest,
+  options?: RequestInit,
+): Promise<ScrapeLabResponse> => {
+  return customFetch<ScrapeLabResponse>(getScrapeLabInfoUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(scrapeLabRequest),
+  });
+};
+
+export const getScrapeLabInfoMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof scrapeLabInfo>>,
+    TError,
+    { data: BodyType<ScrapeLabRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof scrapeLabInfo>>,
+  TError,
+  { data: BodyType<ScrapeLabRequest> },
+  TContext
+> => {
+  const mutationKey = ["scrapeLabInfo"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof scrapeLabInfo>>,
+    { data: BodyType<ScrapeLabRequest> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return scrapeLabInfo(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type ScrapeLabInfoMutationResult = NonNullable<
+  Awaited<ReturnType<typeof scrapeLabInfo>>
+>;
+export type ScrapeLabInfoMutationBody = BodyType<ScrapeLabRequest>;
+export type ScrapeLabInfoMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Scrape lab and professor info from URLs
+ */
+export const useScrapeLabInfo = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof scrapeLabInfo>>,
+    TError,
+    { data: BodyType<ScrapeLabRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof scrapeLabInfo>>,
+  TError,
+  { data: BodyType<ScrapeLabRequest> },
+  TContext
+> => {
+  return useMutation(getScrapeLabInfoMutationOptions(options));
 };
 
 /**

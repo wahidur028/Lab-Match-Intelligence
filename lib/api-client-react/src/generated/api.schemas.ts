@@ -13,6 +13,27 @@ export interface ErrorResponse {
   error: string;
 }
 
+export interface ScrapeLabRequest {
+  /** Google Scholar profile URL of the professor */
+  googleScholarUrl?: string;
+  /** Lab or professor website URL */
+  labWebsiteUrl?: string;
+}
+
+export interface ScrapeLabResponse {
+  professorName: string;
+  university?: string;
+  department?: string;
+  /** AI-generated summary of the professor's research areas */
+  researchFocus: string;
+  /** Formatted list of recent paper titles */
+  recentPapers?: string;
+  activeKeywords?: string[];
+  hIndex?: number | null;
+  citationCount?: number | null;
+  fetchErrors?: string[];
+}
+
 export interface StudentProfile {
   /** Student's full name */
   name: string;

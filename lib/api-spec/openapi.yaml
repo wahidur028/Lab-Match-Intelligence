@@ -198,6 +198,50 @@ components:
       required:
         - error
 
+    ScrapeLabRequest:
+      type: object
+      properties:
+        googleScholarUrl:
+          type: string
+          description: Google Scholar profile URL of the professor
+        labWebsiteUrl:
+          type: string
+          description: Lab or professor website URL
+      minProperties: 1
+
+    ScrapeLabResponse:
+      type: object
+      properties:
+        professorName:
+          type: string
+        university:
+          type: string
+        department:
+          type: string
+        researchFocus:
+          type: string
+          description: AI-generated summary of the professor's research areas
+        recentPapers:
+          type: string
+          description: Formatted list of recent paper titles
+        activeKeywords:
+          type: array
+          items:
+            type: string
+        hIndex:
+          type: integer
+          nullable: true
+        citationCount:
+          type: integer
+          nullable: true
+        fetchErrors:
+          type: array
+          items:
+            type: string
+      required:
+        - professorName
+        - researchFocus
+
     AnalyzeMatchRequest:
       type: object
       properties:
