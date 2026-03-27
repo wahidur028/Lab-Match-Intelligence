@@ -36,7 +36,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       <main className="flex-1 flex flex-col min-w-0 relative z-10 h-full overflow-hidden">
         {/* Mobile header */}
         <header className="md:hidden flex items-center justify-between p-4 bg-card/80 backdrop-blur-md border-b border-border sticky top-0 z-30">
-          <h1 className="font-display font-bold text-lg text-primary">Lab Matcher</h1>
+          <h1 className="font-display font-bold text-lg text-primary">ResearchFit AI</h1>
           <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </Button>

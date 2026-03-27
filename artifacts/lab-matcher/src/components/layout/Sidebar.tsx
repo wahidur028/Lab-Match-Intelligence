@@ -39,8 +39,8 @@ export function Sidebar() {
               <GraduationCap className="w-6 h-6" />
             </div>
             <div>
-              <h1 className="font-display font-bold text-lg leading-tight text-foreground">Lab Matcher</h1>
-              <p className="text-xs text-muted-foreground font-medium">MS/PhD Optimizer</p>
+              <h1 className="font-display font-bold text-lg leading-tight text-foreground">ResearchFit AI</h1>
+              <p className="text-xs text-muted-foreground font-medium">Lab Matching & Application Optimizer</p>
             </div>
           </div>
         </Link>
